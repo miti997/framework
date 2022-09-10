@@ -1,8 +1,9 @@
 import View from "/app/src/views/View.js";
 
-export const render = (view = new View()) => {
-    const content = `
-        <div> Hello users edit</div>
-    `;
-    view.renderContent(content);
+export default class UsersEdit extends View {
+    render() {
+        return `
+            <div> Hello users edit</div>
+        `
+    }
 }

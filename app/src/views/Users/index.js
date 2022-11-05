@@ -1,4 +1,4 @@
-import View from "/app/src/views/View.js";
+const View = await load.view();
 
 export default class UsersIndex extends View {
     render() {

@@ -1,4 +1,5 @@
-import RoutingMiddleware from "/app/src/middleware/RoutingMiddleware.js";
+// let RoutingMiddleware = 
+
 export default class Application {
     addContent() {
         document.body = document.createElement("body");
@@ -13,7 +14,7 @@ export default class Application {
         `;
     }
 
-    loadMiddleware() {
-        new RoutingMiddleware();
+    async loadMiddleware() {
+        load.middleware('RoutingMiddleware');
     }
 }

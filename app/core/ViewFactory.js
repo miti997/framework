@@ -1,14 +1,11 @@
 export default class ViewFactory {
-    constructor (viewToBuild) {
-        this.build(viewToBuild);
+    async renderTemplate(view) {
+        let viewToRender = await load.template(view);
+        return document.getElementById('content').innerHTML = viewToRender;
     }
 
-    build(viewToBuild) {
-        return import(viewToBuild).then(({default: View}) => {
-            let view = new View();
-            document.getElementById('content').innerHTML = view.render();
-        }).catch(e => {
-            console.log(e);
-        });
+    async renderError(error) {
+        let errorToRender = await load.error(error);
+        return document.getElementById('content').innerHTML = errorToRender;
     }
 }

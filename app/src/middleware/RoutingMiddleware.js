@@ -1,10 +1,11 @@
-import Routing from "/app/core/Routing.js";
-import Middleware from "/app/core/Middleware.js";
+let Middleware = await load.core('Middleware');
+let Routing = await load.core('Routing');
 
 export default class RoutingMiddleware extends Middleware {
     build() {
-        let routing = new Routing();
-        routing.addRoute({'/users' : 'users/index.js'});
-        routing.addRoute({'/users/edit/{id}' : 'users/edit.js'});
+        Routing = new Routing();
+        Routing.addRoute({'/users' : 'users/index'});
+        Routing.addRoute({'/users/edit/{id}' : 'users/edit'});
+        Routing.addRoute({'/users/add' : 'users/add'});
     }
 }

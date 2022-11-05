@@ -1,4 +1,4 @@
-import ViewFactory from "/app/core/ViewFactory.js";
+const ViewFactory = await load.core('ViewFactory');
 
 export default class Routing {
     constructor() {
@@ -6,6 +6,7 @@ export default class Routing {
         this.sendParams = {};
         this.matchedRoute;
         this.renderView;
+        this.viewToRender;
         this.addOnClickEvent();
         this.addOnLoadEvent();
     }
@@ -19,25 +20,34 @@ export default class Routing {
     }
 
     addOnClickEvent() {
-        document.addEventListener('click', (e) => this.onClickrouting(e));
+        document.addEventListener('click', (e) => {
+            let targetElement = e.target;
+       
+            if (targetElement.tagName === 'A') {
+                e.preventDefault();
+                this.uri = new URL(targetElement.href).pathname       
+                this.loadTemplates()
+            }
+        });
     }
 
     addOnLoadEvent() {
-        window.onload = () => this.onLoadRouting();
+        window.onload = () => {
+            this.uri = new URL(window.location.href).pathname;
+            this.loadTemplates();
+        }
     }
 
-    onLoadRouting() {
-        this.uri = new URL(window.location.href).pathname;
+    loadTemplates() {
         this.routesItterator();
-    }
-
-    onClickrouting(e) {
-        let targetElement = e.target;
-       
-        if (targetElement.tagName === 'A') {
-            e.preventDefault();
-            this.uri = new URL(targetElement.href).pathname       
-            this.routesItterator();
+        if (this.renderView) {
+            let BuildView = new ViewFactory()
+            BuildView.renderTemplate(this.viewToRender);
+            history.pushState(this.sendParams, '', this.uri);
+        } else {
+            let BuildError = new ViewFactory()
+            BuildError.renderError('Error404')
+            history.pushState('', '', '/404');
         }
     }
 
@@ -59,18 +69,12 @@ export default class Routing {
                     }
                 }
 
-                this.matchedRoute = this.uri;
-                this.renderView = `/app/src/views/${this.routes[routeCounter][route]}`;
+                this.renderView = true;
+                this.viewToRender = this.routes[routeCounter][route]
                 break;
             } else {
-                this.matchedRoute = '/error/404';
-                this.renderView = `/app/src/errors/Error404.js`;
+                this.renderView = false;                
             }
-        }
-
-        if (this.matchedRoute) {
-            history.pushState(this.sendParams, '', this.matchedRoute);
-            new ViewFactory(this.renderView);
         }
     }
 }

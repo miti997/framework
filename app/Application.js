@@ -1,5 +1,3 @@
-// let RoutingMiddleware = 
-
 export default class Application {
     addContent() {
         document.body = document.createElement("body");

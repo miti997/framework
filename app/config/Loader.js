@@ -1,6 +1,7 @@
 export default class Loader {
     constructor (root) {
         this.ROOT = root;
+        window.load = this;
     }
 
     async load(path) {

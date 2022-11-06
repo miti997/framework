@@ -1,6 +1,6 @@
 
 // import Application;
-import Loader from "./app/config/Loader.js";
+import Loader from "./app/core/Loader.js";
 
 new Loader('/js/framework');
 

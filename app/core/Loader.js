@@ -1,3 +1,5 @@
+import ErrorFactory from './ErrorFactory.js'
+
 export default class Loader {
     constructor (root) {
         this.ROOT = root;
@@ -5,13 +7,8 @@ export default class Loader {
     }
 
     async load(path) {
-        try {
-            let imported = await import(this.ROOT + path);
-            return imported.default
-        } catch (error) {
-            console.log(error)
-        }   
-        
+        let imported = await import(this.ROOT + path);
+        return imported.default;        
     }
 
     async application() {
@@ -19,26 +16,50 @@ export default class Loader {
     }
 
     async middleware(path) {
-        let middleware = await this.load('/app/src/middleware/' + path + '.js');
-        return new middleware();
+        try {
+            let middleware = await this.load('/app/src/middleware/' + path + '.js');
+            return new middleware();
+        } catch (error) {
+            return new ErrorFactory('Error', error.message);
+        }
     }
 
+    async config(path) {
+        try {
+            let routes = await this.load('/app/config/' + path + '.js');
+            return routes;
+        } catch (error) {
+            return new ErrorFactory('Error', error.message);
+        }
+    }
+    
     async core(path) {
-        return await this.load('/app/core/' + path + '.js');
+        try {
+            return await this.load('/app/core/' + path + '.js');
+        } catch (error) {
+            console.log(error.message)
+        }
     }
 
     async view() {
-        return await this.load('/app/src/views/View.js');
-       
+        try {
+            return await this.load('/app/src/views/View.js');
+        } catch (error) {
+            return new ErrorFactory('Error', error.message);
+        }
     }
 
     async template(path) {
-        let template = await this.load('/app/src/views/' + path + '.js');
-        return new template().render();
+        try {
+            let template = await this.load('/app/src/views/' + path + '.js');
+            return new template().render();
+        } catch (error) {
+            return new ErrorFactory('Error', error.message);
+        }
     }
 
-    async error(path) {
+    async error(path, message) {
         let error = await this.load('/app/src/errors/' + path + '.js');
-        return new error().render();
+        return new error().render(message);
     }
 }

@@ -1,8 +1,6 @@
+import Loader from './app/core/Loader.js'
 
-// import Application;
-import Loader from "./app/core/Loader.js";
-
-new Loader('/js/framework');
+new Loader('');
 
 let Application = await load.application();
 Application = new Application();

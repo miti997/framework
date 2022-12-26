@@ -1,5 +1,6 @@
-let Middleware = await load.core('Middleware');
-let routes = await load.config('routes');
+const Middleware = await load.core('Middleware');
+let ViewFactory = await load.core('ViewFactory');
+const routes = await load.config('routes');
 
 export default class RoutingMiddleware extends Middleware {
     build() {
@@ -19,7 +20,6 @@ export default class RoutingMiddleware extends Middleware {
             }
         });
     }
-
     goOverRoutes() {
         const uris = Object.keys(routes);
         let routesLength = uris.length
@@ -32,13 +32,18 @@ export default class RoutingMiddleware extends Middleware {
                 break
             }
         }
-
+console.log('test');
         return this.loadView();
     }
 
-    loadView() {
-        console.log(this.uri);
-        console.log(this.matchedRoute);
-        console.log(this.uri.replace('/'+this.matchedRoute+'/', ''));
+    async loadView() {
+        history.pushState({}, null, this.uri);
+
+        let params = this.uri.replace('/'+this.matchedRoute+'/', '');
+        let BuildView  = new ViewFactory();
+        await BuildView.renderTemplate(this.matchedRoute);
+        // console.log(this.uri);
+        // console.log(this.matchedRoute);
+        // console.log(this.uri.replace('/'+this.matchedRoute+'/', ''));
     }
 }

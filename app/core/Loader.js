@@ -37,7 +37,7 @@ export default class Loader {
         try {
             return await this.load('/app/core/' + path + '.js');
         } catch (error) {
-            console.log(error.message)
+            return new ErrorFactory('Error', error.message);
         }
     }
 

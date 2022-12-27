@@ -1,5 +1,5 @@
 export default class View {
-    renderContent(content) {
+    async renderContent(content) {
         document.getElementById('content').innerHTML = content;
     }
 }

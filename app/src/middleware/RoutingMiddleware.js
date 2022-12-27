@@ -5,6 +5,7 @@ const routes = await load.config('routes');
 export default class RoutingMiddleware extends Middleware {
     build() {
         this.uri = window.location.pathname;
+        this.params = [];
         this.goOverRoutes();
         this.onClickEvent();
     }
@@ -24,26 +25,32 @@ export default class RoutingMiddleware extends Middleware {
         const uris = Object.keys(routes);
         let routesLength = uris.length
         this.matchedRoute = this.uri;
+        this.matchedView = this.uri;
         for (let i = 0; i < routesLength; i++) {
             let urlToMatch = uris[i].replace(/\{\*\}/g, '[\\w\\_\\-]+');
             urlToMatch = new RegExp('^' + urlToMatch+'$');
             if (urlToMatch.test(this.uri)) {
-                this.matchedRoute = routes[uris[i]];
+                this.matchedRoute = uris[i];
+                this.matchedView = routes[uris[i]];
                 break
             }
         }
-console.log('test');
+
+        this.extractParams();
         return this.loadView();
     }
 
-    async loadView() {
-        history.pushState({}, null, this.uri);
+    extractParams() {
+        let regex = new RegExp('\{.*}');
+        let params = this.uri.replace(this.matchedRoute.replace(regex, ''), '');
+        if (params !== '') {
+            this.params = params.split('/');
+        }
+    }
 
-        let params = this.uri.replace('/'+this.matchedRoute+'/', '');
-        let BuildView  = new ViewFactory();
-        await BuildView.renderTemplate(this.matchedRoute);
-        // console.log(this.uri);
-        // console.log(this.matchedRoute);
-        // console.log(this.uri.replace('/'+this.matchedRoute+'/', ''));
+    async loadView() {
+        history.pushState({}, null, this.uri);  
+        let view = await load.template(this.matchedView);
+        await view.renderContent(view.render(...this.params));
     }
 }

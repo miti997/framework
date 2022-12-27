@@ -49,10 +49,10 @@ export default class Loader {
         }
     }
 
-    async template(path) {
+    async template(path, params = []) {
         try {
             let template = await this.load('/app/src/views/' + path + '.js');
-            return new template().render();
+            return new template();
         } catch (error) {
             return new ErrorFactory('Error', error.message);
         }

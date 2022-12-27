@@ -1,8 +1,6 @@
+AddType application/javascript .js
 RewriteEngine on
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !\.js$
 RewriteRule ^(.*)$ /index.html?path=$1 [NC,L,QSA]
-AddType application/javascript .js
-<IfModule mod_mime.c>
-    AddType application/javascript .js
-</IfModule>

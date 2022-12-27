@@ -1,9 +1,9 @@
 const View = await load.view();
 
 export default class UsersEdit extends View {
-    render() {
+    render(id) {
         return `
-            <div> Hello users edit</div>
+            <div> Hello edit user ${id}</div>
         `
     }
 }

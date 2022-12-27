@@ -1,9 +1,9 @@
 const View = await load.view();
 
 export default class UsersSetData extends View {
-    render() {
+    render(userId, valueToChange) {
         return `
-            <div> Hello users set data</div>
+            <div> Hello users ${userId} data ${valueToChange}</div>
         `
     }
 }

@@ -20,26 +20,38 @@ export default class RoutingMiddleware extends Middleware {
             }
         });
     }
+
     goOverRoutes() {
         const uris = Object.keys(routes);
         let routesLength = uris.length
-        this.matchedRoute = this.uri;
-        this.matchedView = this.uri;
+
         for (let i = 0; i < routesLength; i++) {
             let urlToMatch = uris[i].replace(/\{\*\}/g, '[\\w\\_\\-]+');
             urlToMatch = new RegExp('^' + urlToMatch+'$');
             if (urlToMatch.test(this.uri)) {
                 this.matchedRoute = uris[i];
                 this.matchedView = routes[uris[i]];
-                break
+                this.extractParamsMatchedRoute();
+                return this.loadView();
             }
         }
 
-        this.extractParams();
+        this.extractParamsDefault();
         return this.loadView();
     }
 
-    extractParams() {
+    extractParamsDefault() {
+        let uriArray = this.uri.split('/')
+        if (uriArray.length >= 3) {
+            this.matchedView = `${uriArray[1]}/${uriArray[2]}`;
+        } else {
+            this.matchedView = `${uriArray[1]}/index`
+        }
+        
+        this.params = uriArray.splice(3);
+    }
+
+    extractParamsMatchedRoute() {
         let regex = new RegExp('\{.*}');
         let params = this.uri.replace(this.matchedRoute.replace(regex, ''), '');
         if (params !== '') {

@@ -1,7 +1,7 @@
 const View = await load.view();
 
 export default class ContactAdd extends View {
-    render() {
+    content() {
         return `
             <div> Hello contacts add</div>
         `

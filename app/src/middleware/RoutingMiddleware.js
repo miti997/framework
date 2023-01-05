@@ -1,5 +1,4 @@
 const Middleware = await load.core('Middleware');
-let ViewFactory = await load.core('ViewFactory');
 const routes = await load.config('routes');
 
 export default class RoutingMiddleware extends Middleware {
@@ -51,6 +50,6 @@ export default class RoutingMiddleware extends Middleware {
     async loadView() {
         history.pushState({}, null, this.uri);  
         let view = await load.template(this.matchedView);
-        await view.renderContent(view.render(...this.params));
+        await view.render(view.content(...this.params));
     }
 }

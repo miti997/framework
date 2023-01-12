@@ -8,7 +8,6 @@ export default class RoutingMiddleware extends Middleware {
         this.goOverRoutes(false);
         this.onClickEvent();
         window.addEventListener('popstate', () => {
-            console.log('here')
             this.uri = window.location.pathname;
             this.goOverRoutes(false);
         });
@@ -16,11 +15,9 @@ export default class RoutingMiddleware extends Middleware {
 
     onClickEvent() {
         document.addEventListener('click', (e) => {
-            let targetElement = e.target;
-
-            if (targetElement.tagName === 'A' && targetElement.hasAttribute('data-link')) {
+            if (e.target.tagName === 'A' && e.target.hasAttribute('data-link')) {
                 e.preventDefault();
-                this.uri = new URL(targetElement.href).pathname;
+                this.uri = new URL(e.target.href).pathname;
                 this.goOverRoutes();
             }
         });
@@ -31,8 +28,7 @@ export default class RoutingMiddleware extends Middleware {
         let routesLength = uris.length
 
         for (let i = 0; i < routesLength; i++) {
-            let urlToMatch = uris[i].replace(/\{\*\}/g, '[\\w\\_\\-]+');
-            urlToMatch = new RegExp('^' + urlToMatch+'$');
+            let urlToMatch = new RegExp('^' + uris[i].replace(/\{\*\}/g, '[\\w\\_\\-]+')+'$');
             if (urlToMatch.test(this.uri)) {
                 this.matchedRoute = uris[i];
                 this.matchedView = routes[uris[i]];

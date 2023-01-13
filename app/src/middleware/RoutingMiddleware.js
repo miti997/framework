@@ -61,8 +61,8 @@ export default class RoutingMiddleware extends Middleware {
     }
 
     async loadView(pushState) {
-        let view = await load.template(this.matchedView);
-        await view.render(view.content(...this.params));
+        let ViewFactory = await load.core('ViewFactory');
+        new ViewFactory(this.matchedView, this.params);
         if (pushState) history.pushState({}, null, this.uri);  
     }
 }

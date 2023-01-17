@@ -2,8 +2,8 @@
 A JavaScript client-side framework for building web applications.
 
 # **Requirements**
-*WAMP or XAMPP installed
-*The .htaccess file included with the framework
+* WAMP or XAMPP installed
+* The .htaccess file included with the framework
 
 # **Usage**
 1. Clone or download the repository

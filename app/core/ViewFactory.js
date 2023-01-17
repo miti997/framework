@@ -5,6 +5,6 @@ export default class ViewFactory {
 
     async createView(path, params) {
         let template = await load.template(path);
-        template.render(template.content(...params))
+        template.render(await template.content(...params))
     }
 }

@@ -1,7 +1,7 @@
 export default class Application {
     addContent() {
         document.body = document.createElement("body");
-        document.body.innerHTML = `
+        document.body.innerHTML = /*html*/`
         <ul>
             <li><a href="/" data-link>Home</a></li>
             <li><a href="/contact" data-link>Contact</a></li>

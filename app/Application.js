@@ -1,4 +1,8 @@
 export default class Application {
+    constructor() {
+        this.loadMiddleware()
+        this.addContent()
+    }
     addContent() {
         document.body = document.createElement("body");
         document.body.innerHTML = /*html*/`

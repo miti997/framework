@@ -4,5 +4,3 @@ new Loader('');
 
 let Application = await load.application();
 Application = new Application();
-Application.loadMiddleware();
-Application.addContent();

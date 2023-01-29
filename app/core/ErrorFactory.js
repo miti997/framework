@@ -5,6 +5,6 @@ export default class ErrorFactory {
 
     async loadError(errorName, message) {
         let errorToRender = await load.error(errorName, message);
-        return document.getElementById('content').innerHTML = errorToRender;
+        return document.querySelector('main').innerHTML = errorToRender;
     }
 }

@@ -1,7 +1,7 @@
 import ErrorFactory from './ErrorFactory.js'
 
 export default class Loader {
-    constructor (root) {
+    constructor (root = '') {
         this.ROOT = root;
         window.load = this;
     }
@@ -48,9 +48,9 @@ export default class Loader {
         }
     }
 
-    async component() {
+    async component(path = 'Component') {
         try {
-            return this.load('/app/src/components/Component.js');
+            return this.load(`/app/src/components/${path}.js`);
         } catch (error) {
             return new ErrorFactory('Error', error.message);
         }
@@ -63,6 +63,10 @@ export default class Loader {
         } catch (error) {
             return new ErrorFactory('Error', error.message);
         }
+    }
+
+    async spinner() {
+
     }
 
     async error(path, message) {

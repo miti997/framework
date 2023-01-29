@@ -2,7 +2,8 @@ const Middleware = await load.core('Middleware');
 const routes = await load.config('routes');
 
 export default class RoutingMiddleware extends Middleware {
-    build() {
+    async build() {
+        window.scope = "default";
         this.uri = window.location.pathname;
         this.params = [];
         this.goOverRoutes(false);
@@ -62,7 +63,8 @@ export default class RoutingMiddleware extends Middleware {
 
     async loadView(pushState) {
         let ViewFactory = await load.core('ViewFactory');
-        new ViewFactory(this.matchedView, this.params);
+        ViewFactory = new ViewFactory();
+        ViewFactory.build(this.matchedView, this.params);
         if (pushState) history.pushState({}, null, this.uri);  
     }
 }

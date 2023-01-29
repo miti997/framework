@@ -12,7 +12,7 @@ export default class Loader {
     }
 
     async application() {
-        return await this.load('/app/Application.js');
+        return this.load('/app/Application.js');
     }
 
     async middleware(path) {
@@ -26,8 +26,7 @@ export default class Loader {
 
     async config(path) {
         try {
-            let routes = await this.load('/app/config/' + path + '.js');
-            return routes;
+            return this.load('/app/config/' + path + '.js');
         } catch (error) {
             return new ErrorFactory('Error', error.message);
         }
@@ -35,7 +34,7 @@ export default class Loader {
     
     async core(path) {
         try {
-            return await this.load('/app/core/' + path + '.js');
+            return this.load('/app/core/' + path + '.js');
         } catch (error) {
             return new ErrorFactory('Error', error.message);
         }
@@ -43,7 +42,7 @@ export default class Loader {
 
     async view() {
         try {
-            return await this.load('/app/src/views/View.js');
+            return this.load('/app/src/views/View.js');
         } catch (error) {
             return new ErrorFactory('Error', error.message);
         }
@@ -51,7 +50,7 @@ export default class Loader {
 
     async component() {
         try {
-            return await this.load('/app/src/components/Component.js');
+            return this.load('/app/src/components/Component.js');
         } catch (error) {
             return new ErrorFactory('Error', error.message);
         }
@@ -59,8 +58,8 @@ export default class Loader {
 
     async template(path) {
         try {
-            let template = await this.load('/app/src/views/' + path + '.js');
-            return new template();
+            let template =  await this.load('/app/src/views/' + path + '.js');
+            return new template()
         } catch (error) {
             return new ErrorFactory('Error', error.message);
         }

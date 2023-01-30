@@ -2,7 +2,7 @@ const Middleware = await load.core('Middleware');
 const routes = await load.config('routes');
 
 export default class RoutingMiddleware extends Middleware {
-    async build() {
+    build() {
         window.scope = "default";
         this.uri = window.location.pathname;
         this.params = [];
@@ -16,9 +16,10 @@ export default class RoutingMiddleware extends Middleware {
 
     onClickEvent() {
         document.addEventListener('click', (e) => {
-            if (e.target.tagName === 'A' && e.target.hasAttribute('data-link')) {
+            let target = e.composedPath()[0];
+            if (target.tagName === 'A' && target.hasAttribute('data-link')) {
                 e.preventDefault();
-                this.uri = new URL(e.target.href).pathname;
+                this.uri = new URL(target.href).pathname;
                 this.goOverRoutes();
             }
         });
@@ -62,6 +63,9 @@ export default class RoutingMiddleware extends Middleware {
     }
 
     async loadView(pushState) {
+        // load.component(`${scope}/${scope}-spinner`);
+        // document.body.append(document.createElement(`${scope}-spinner`));
+
         let ViewFactory = await load.core('ViewFactory');
         ViewFactory = new ViewFactory();
         ViewFactory.build(this.matchedView, this.params);

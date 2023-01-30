@@ -1,6 +1,6 @@
 let Component = await load.component();
 
-customElements.define('loading-spinner', class LoadingSpinner extends Component {
+customElements.define('default-spinner', class LoadingSpinner extends Component {
     constructor() {
         super()
     }

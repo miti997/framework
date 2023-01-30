@@ -11,10 +11,6 @@ export default class Loader {
         return imported.default;        
     }
 
-    async application() {
-        return this.load('/app/Application.js');
-    }
-
     async middleware(path) {
         try {
             let middleware = await this.load('/app/src/middleware/' + path + '.js');
@@ -63,10 +59,6 @@ export default class Loader {
         } catch (error) {
             return new ErrorFactory('Error', error.message);
         }
-    }
-
-    async spinner() {
-
     }
 
     async error(path, message) {

@@ -1,7 +1,7 @@
 export default class Component extends HTMLElement {
-    constructor() {
+    constructor(shadowMode = 'open') {
         super()
-        this.shadow = this.attachShadow({mode: 'open'});
+        this.shadow = this.attachShadow({mode: shadowMode});
         this.generateTemplate()
         this.shadow.append(this.template.content.cloneNode(true));
     }

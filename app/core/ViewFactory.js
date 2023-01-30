@@ -1,21 +1,34 @@
 export default class ViewFactory {
     build(path, params = []) {
-        // load.component(`${scope}/${scope}-spinner`);
-        // document.body.append(document.createElement(`${scope}-spinner`));
-        if (firstRender) {
-            load.component(`${scope}/${scope}-header`);
-            load.component(`${scope}/${scope}-footer`);
-            document.body.append(document.createElement(`${scope}-header`));
-            document.body.append(document.createElement(`main`));
-            document.body.append(document.createElement(`${scope}-footer`));
-            firstRender = false;
+        if (!firstRender) {
+           this.addSpinner();
+        } else {
+           this.generateBody();
         }
         this.createView(path, params);
     }
 
     async createView(path, params) {
-        let template = await load.template(path);
-        template.render(await template.content(...params));
-        document.querySelector(`${scope}-spinner`).remove();
+        let Template = await load.template(path);
+        Template = new Template();
+        Template.render(await Template.content(...params));
+        $.querySelector(`${scope}-spinner`).remove();
+    }
+
+    addSpinner() {
+        load.components(`${scope}/${scope}-spinner`);
+        $$.append($.createElement(`${scope}-spinner`));
+    }
+
+    generateBody() {
+        load.components(
+            `${scope}/${scope}-header`,
+            `${scope}/${scope}-footer`,
+        );
+
+        $$.append($.createElement(`${scope}-header`));
+        $$.append($.createElement(`main`));
+        $$.append($.createElement(`${scope}-footer`));
+        firstRender = false;
     }
 }

@@ -15,7 +15,7 @@ export default class RoutingMiddleware extends Middleware {
     }
 
     onClickEvent() {
-        document.addEventListener('click', (e) => {
+        $.addEventListener('click', (e) => {
             let target = e.composedPath()[0];
             if (target.tagName === 'A' && target.hasAttribute('data-link')) {
                 e.preventDefault();
@@ -63,9 +63,6 @@ export default class RoutingMiddleware extends Middleware {
     }
 
     async loadView(pushState) {
-        // load.component(`${scope}/${scope}-spinner`);
-        // document.body.append(document.createElement(`${scope}-spinner`));
-
         let ViewFactory = await load.core('ViewFactory');
         ViewFactory = new ViewFactory();
         ViewFactory.build(this.matchedView, this.params);

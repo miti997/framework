@@ -7,7 +7,7 @@ export default class ScopeMiddleware extends Middleware {
     }
 
     loadSpinner() {
-        load.component(`${scope}/${scope}-spinner`);
-        document.body.append(document.createElement(`${scope}-spinner`));
+        load.components(`${scope}/${scope}-spinner`);
+        $$.append($.createElement(`${scope}-spinner`));
     }
 }

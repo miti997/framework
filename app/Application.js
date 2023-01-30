@@ -4,7 +4,7 @@ export default class Application {
         this.loadMiddleware();
     }
     
-    async loadMiddleware() {
+    loadMiddleware() {
         load.middleware('ScopeMiddleware');
         load.middleware('RoutingMiddleware');
     }

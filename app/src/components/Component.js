@@ -7,7 +7,7 @@ export default class Component extends HTMLElement {
     }
 
     generateTemplate() {
-        this.template = document.createElement('template')
+        this.template = $.createElement('template')
         this.template.innerHTML = /*html*/`
             <style>${this.shadowStyle()}</style>
             ${this.shadowContent()}

@@ -6,6 +6,14 @@ export default class Component extends HTMLElement {
         this.shadow.append(this.template.content.cloneNode(true));
     }
 
+    select(selector) {
+        return this.shadow.querySelector(selector);
+    };
+
+    shadowStyle() {
+
+    }
+
     generateTemplate() {
         this.template = $.createElement('template')
         this.template.innerHTML = /*html*/`

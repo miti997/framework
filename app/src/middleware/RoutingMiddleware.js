@@ -1,13 +1,24 @@
 const Middleware = await load.core('Middleware');
-const routes = await load.config('routes');
 
 export default class RoutingMiddleware extends Middleware {
-    build() {
-        window.scope = "default";
+    async build() {
+        window.scope = 'default';
+        this.routes = await load.config('routes');
+        await this.loadViewFactory();
         this.uri = window.location.pathname;
         this.params = [];
         this.goOverRoutes(false);
         this.onClickEvent();
+        this.addWindowPopstate()
+    }
+
+    async loadViewFactory() {
+        this.ViewFactory = await load.core('ViewFactory');
+        this.ViewFactory = new this.ViewFactory();
+        this.ViewFactory.addSpinner();
+    }
+    
+    addWindowPopstate() {
         window.addEventListener('popstate', () => {
             this.uri = window.location.pathname;
             this.goOverRoutes(false);
@@ -26,14 +37,14 @@ export default class RoutingMiddleware extends Middleware {
     }
 
     goOverRoutes(pushState = true) {
-        const uris = Object.keys(routes);
+        const uris = Object.keys(this.routes);
         let routesLength = uris.length
 
         for (let i = 0; i < routesLength; i++) {
             let urlToMatch = new RegExp('^' + uris[i].replace(/\{\*\}/g, '[\\w\\_\\-]+')+'$');
             if (urlToMatch.test(this.uri)) {
                 this.matchedRoute = uris[i];
-                this.matchedView = routes[uris[i]];
+                this.matchedView = this.routes[uris[i]];
                 this.extractParamsMatchedRoute();
                 return this.loadView(pushState);
             }
@@ -63,9 +74,7 @@ export default class RoutingMiddleware extends Middleware {
     }
 
     async loadView(pushState) {
-        let ViewFactory = await load.core('ViewFactory');
-        ViewFactory = new ViewFactory();
-        ViewFactory.build(this.matchedView, this.params);
+        this.ViewFactory.build(this.matchedView, this.params);
         if (pushState) history.pushState({}, null, this.uri);  
     }
 }

@@ -5,7 +5,6 @@ export default class Application {
     }
     
     loadMiddleware() {
-        load.middleware('ScopeMiddleware');
         load.middleware('RoutingMiddleware');
     }
 }

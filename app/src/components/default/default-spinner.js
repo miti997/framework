@@ -9,7 +9,6 @@ customElements.define('default-spinner', class LoadingSpinner extends Component 
         return /*html*/`
             <div class="spinner-wrapper">
                 <div class="spinner"></div>
-                <div>Loading...</div>
             </div>
         `;
     }

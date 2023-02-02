@@ -1,6 +1,8 @@
-import Loader from './app/core/Loader.js'
+import Application from '/app/Application.js'
+import Loader from '/app/core/Loader.js'
 
-new Loader('');
+window.$ = document
+window.$$ = document.body
 
-let Application = await load.application();
-Application = new Application();
+new Loader();
+new Application();

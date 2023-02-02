@@ -1,12 +1,34 @@
 export default class ViewFactory {
-    constructor(path, params) {
+    build(path, params = []) {
+        if (!firstRender) {
+           this.addSpinner();
+        } else {
+           this.generateBody();
+        }
         this.createView(path, params);
     }
 
     async createView(path, params) {
-        let template = await load.template(path);
-        template.addComponent('loading-spinner');
-        template.render(`<loading-spinner></loading-spinner>`);
-        template.render(await template.content(...params));
+        let Template = await load.template(path);
+        Template = new Template();
+        Template.render(await Template.content(...params));
+        $.querySelector(`${scope}-spinner`).remove();
+    }
+
+    addSpinner() {
+        load.components(`${scope}/${scope}-spinner`);
+        $$.append($.createElement(`${scope}-spinner`));
+    }
+
+    generateBody() {
+        load.components(
+            `${scope}/${scope}-header`,
+            `${scope}/${scope}-footer`,
+        );
+
+        $$.append($.createElement(`${scope}-header`));
+        $$.append($.createElement(`main`));
+        $$.append($.createElement(`${scope}-footer`));
+        firstRender = false;
     }
 }

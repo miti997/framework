@@ -1,12 +1,25 @@
 const Middleware = await load.core('Middleware');
 const routes = await load.config('routes');
 
+
 export default class RoutingMiddleware extends Middleware {
-    build() {
+    async build() {
+        window.scope = 'default';
+        await this.loadViewFactory();
         this.uri = window.location.pathname;
         this.params = [];
         this.goOverRoutes(false);
         this.onClickEvent();
+        this.addWindowPopstate()
+    }
+
+    async loadViewFactory() {
+        this.ViewFactory = await load.core('ViewFactory');
+        this.ViewFactory = new this.ViewFactory();
+        this.ViewFactory.addSpinner();
+    }
+    
+    addWindowPopstate() {
         window.addEventListener('popstate', () => {
             this.uri = window.location.pathname;
             this.goOverRoutes(false);
@@ -14,10 +27,11 @@ export default class RoutingMiddleware extends Middleware {
     }
 
     onClickEvent() {
-        document.addEventListener('click', (e) => {
-            if (e.target.tagName === 'A' && e.target.hasAttribute('data-link')) {
+        $.addEventListener('click', (e) => {
+            let target = e.composedPath()[0];
+            if (target.tagName === 'A' && target.hasAttribute('data-link')) {
                 e.preventDefault();
-                this.uri = new URL(e.target.href).pathname;
+                this.uri = new URL(target.href).pathname;
                 this.goOverRoutes();
             }
         });
@@ -61,8 +75,7 @@ export default class RoutingMiddleware extends Middleware {
     }
 
     async loadView(pushState) {
-        let ViewFactory = await load.core('ViewFactory');
-        new ViewFactory(this.matchedView, this.params);
+        this.ViewFactory.build(this.matchedView, this.params);
         if (pushState) history.pushState({}, null, this.uri);  
     }
 }

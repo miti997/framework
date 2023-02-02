@@ -10,7 +10,7 @@ export default class PageHome extends View {
         //     }, 5000);
         // });
 
-        this.addComponent('todo-item')
+        load.components('todo-item')
         return/*html*/`
             <div>Hello world</div>
             <todo-item checked>

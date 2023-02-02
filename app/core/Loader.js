@@ -1,68 +1,51 @@
 import ErrorFactory from './ErrorFactory.js'
 
 export default class Loader {
-    constructor (root) {
+    constructor (root = '') {
         this.ROOT = root;
         window.load = this;
     }
 
     async load(path) {
-        let imported = await import(this.ROOT + path);
-        return imported.default;        
-    }
-
-    async application() {
-        return this.load('/app/Application.js');
+        try {
+            let imported = await import(this.ROOT + path);
+            return imported.default;
+        } catch (error) {
+            return new ErrorFactory('Error', error.message);
+        }   
     }
 
     async middleware(path) {
-        try {
-            let middleware = await this.load('/app/src/middleware/' + path + '.js');
-            return new middleware();
-        } catch (error) {
-            return new ErrorFactory('Error', error.message);
-        }
+        let middleware = await this.load('/app/src/middleware/' + path + '.js');
+        return new middleware();
     }
 
-    async config(path) {
-        try {
-            return this.load('/app/config/' + path + '.js');
-        } catch (error) {
-            return new ErrorFactory('Error', error.message);
-        }
+    config(path) {
+        return this.load('/app/config/' + path + '.js');
     }
     
     async core(path) {
-        try {
-            return this.load('/app/core/' + path + '.js');
-        } catch (error) {
-            return new ErrorFactory('Error', error.message);
-        }
+        return this.load('/app/core/' + path + '.js');
     }
 
     async view() {
-        try {
-            return this.load('/app/src/views/View.js');
-        } catch (error) {
-            return new ErrorFactory('Error', error.message);
-        }
+        return this.load('/app/src/views/View.js');
     }
 
     async component() {
-        try {
-            return this.load('/app/src/components/Component.js');
-        } catch (error) {
-            return new ErrorFactory('Error', error.message);
+        return this.load(`/app/src/components/Component.js`);
+    }
+
+    async components(...paths) {
+        let lengthPath = paths.length;
+        for (let i = 0; i < lengthPath; i++) {
+            this.load(`/app/src/components/${paths[0]}.js`);
         }
     }
 
-    async template(path) {
-        try {
-            let template =  await this.load('/app/src/views/' + path + '.js');
-            return new template()
-        } catch (error) {
-            return new ErrorFactory('Error', error.message);
-        }
+    template(path) {
+        let template =  this.load('/app/src/views/' + path + '.js');
+        return template;
     }
 
     async error(path, message) {

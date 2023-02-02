@@ -1,9 +1,10 @@
 const Middleware = await load.core('Middleware');
+const routes = await load.config('routes');
+
 
 export default class RoutingMiddleware extends Middleware {
     async build() {
         window.scope = 'default';
-        this.routes = await load.config('routes');
         await this.loadViewFactory();
         this.uri = window.location.pathname;
         this.params = [];
@@ -37,14 +38,14 @@ export default class RoutingMiddleware extends Middleware {
     }
 
     goOverRoutes(pushState = true) {
-        const uris = Object.keys(this.routes);
+        const uris = Object.keys(routes);
         let routesLength = uris.length
 
         for (let i = 0; i < routesLength; i++) {
             let urlToMatch = new RegExp('^' + uris[i].replace(/\{\*\}/g, '[\\w\\_\\-]+')+'$');
             if (urlToMatch.test(this.uri)) {
                 this.matchedRoute = uris[i];
-                this.matchedView = this.routes[uris[i]];
+                this.matchedView = routes[uris[i]];
                 this.extractParamsMatchedRoute();
                 return this.loadView(pushState);
             }

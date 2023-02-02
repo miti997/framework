@@ -32,7 +32,7 @@ export default class Loader {
         return this.load('/app/src/views/View.js');
     }
 
-    async component(path = 'Component') {
+    async component() {
         return this.load(`/app/src/components/Component.js`);
     }
 

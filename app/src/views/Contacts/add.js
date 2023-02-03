@@ -1,7 +1,7 @@
-const View = await load.view();
+import View from "/app/src/views/View.js"
 
 export default class ContactAdd extends View {
-    async content() {
+    content() {
         return `
             <div> Hello contacts add</div>
         `

@@ -1,7 +1,7 @@
-const View = await load.view();
+import View from "/app/src/views/View.js"
 
 export default class UsersSetData extends View {
-    async content(userId, valueToChange) {
+    content(userId, valueToChange) {
         return/*html*/`
             <div> Hello users ${userId} data ${valueToChange}</div>
         `

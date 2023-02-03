@@ -3,9 +3,9 @@
  * It contains, at the time of creation, all possible functions a component can have
  */
 
-let Component = await load.component();
+import Component from '/app/src/components/Component.js'
 
-customElements.define('todo-item', class TodoItem extends Component {
+export default customElements.define('todo-item', class TodoItem extends Component {
     constructor() {
         super()
     }

@@ -9,9 +9,7 @@ export default class PageHome extends View {
         //     setTimeout(() => {
         //         resolve("delayed function");
         //     }, 5000);
-        // });
-        this.addComponent('todo-item');
-        
+        // });        
         return/*html*/`
             <div>Hello world</div>
             <todo-item checked>

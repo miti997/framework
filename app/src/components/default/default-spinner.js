@@ -1,4 +1,4 @@
-let Component = await load.component();
+import Component from '/app/src/components/Component.js'
 
 customElements.define('default-spinner', class LoadingSpinner extends Component {
     constructor() {

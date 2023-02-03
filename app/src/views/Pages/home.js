@@ -1,7 +1,8 @@
-const View = await load.view();
+import View from "/app/src/views/View.js"
+import "/app/src/components/todo-item.js"
 
 export default class PageHome extends View {
-    async content() {
+    content() {
         //code for testing purposes. remove comments to simulate long load time
 
         // return new Promise((resolve) => {
@@ -9,8 +10,8 @@ export default class PageHome extends View {
         //         resolve("delayed function");
         //     }, 5000);
         // });
-
-        load.components('todo-item')
+        this.addComponent('todo-item');
+        
         return/*html*/`
             <div>Hello world</div>
             <todo-item checked>

@@ -1,5 +1,10 @@
 export default class View {
-    async render(content) {
-        $.querySelector('main').innerHTML = content;
+    components = [];
+    render(params) {
+        $.querySelector('main').innerHTML = this.content(...params);
+    }
+    
+    addComponent(componentName) {
+       this.components.push(componentName);
     }
 }

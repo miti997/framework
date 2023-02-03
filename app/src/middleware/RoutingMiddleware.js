@@ -1,22 +1,15 @@
-const Middleware = await load.core('Middleware');
-const routes = await load.config('routes');
+import routes from '/app/config/routes.js';
+import ViewFactory from '/app/core/ViewFactory.js';
 
-
-export default class RoutingMiddleware extends Middleware {
-    async build() {
+export default class RoutingMiddleware {
+    build() {
         window.scope = 'default';
-        await this.loadViewFactory();
         this.uri = window.location.pathname;
         this.params = [];
+        this.ViewFactory = new ViewFactory();
         this.goOverRoutes(false);
         this.onClickEvent();
         this.addWindowPopstate()
-    }
-
-    async loadViewFactory() {
-        this.ViewFactory = await load.core('ViewFactory');
-        this.ViewFactory = new this.ViewFactory();
-        this.ViewFactory.addSpinner();
     }
     
     addWindowPopstate() {
@@ -74,7 +67,7 @@ export default class RoutingMiddleware extends Middleware {
         }
     }
 
-    async loadView(pushState) {
+    loadView(pushState) {
         this.ViewFactory.build(this.matchedView, this.params);
         if (pushState) history.pushState({}, null, this.uri);  
     }

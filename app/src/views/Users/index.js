@@ -1,7 +1,7 @@
-const View = await load.view();
+import View from "/app/src/views/View.js"
 
 export default class UsersIndex extends View {
-    async content() {
+    content() {
         return/*html*/`
             <div> Hello users index</div>
         `

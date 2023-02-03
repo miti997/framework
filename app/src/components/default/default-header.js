@@ -1,4 +1,5 @@
-let Component = await load.component();
+// let Component = await load.component();
+import Component from '/app/src/components/Component.js'
 
 customElements.define('default-header', class DefaultHeader extends Component {
     constructor() {

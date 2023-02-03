@@ -1,8 +1,10 @@
-import Application from '/app/Application.js'
-import Loader from '/app/core/Loader.js'
+import RountingMiddleware from '/app/src/middleware/RoutingMIddleware.js';
+import '/app/config/routes.js';
+import '/app/core/ViewFactory.js';
+import '/app/src/components/Component.js'
 
-window.$ = document
-window.$$ = document.body
+window.$ = document;
+window.$$ = document.body;
+window.firstRender = true;
 
-new Loader();
-new Application();
+new RountingMiddleware().build();

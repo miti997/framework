@@ -1,31 +1,32 @@
 export default class ViewFactory {
-    build(path, params = []) {
-        if (!firstRender) {
-           this.addSpinner();
-        } else {
-           this.generateBody();
+    async build(path, params = []) {
+        this.addSpinner();
+        if (firstRender) {
+           await this.generateBody();
+           firstRender = false;
         }
-        this.createView(path, params);
+        await this.createView(path, params);
+        this.removeSpinner()
     }
 
     async createView(path, params) {
-        let Template = await load.template(path);
-        Template = new Template();
-        Template.render(await Template.content(...params));
+        let Template = await import(`/app/src/views/${path}.js`);
+        Template = new Template.default().render(params);
+    }
+
+    removeSpinner() {
         $.querySelector(`${scope}-spinner`).remove();
     }
 
-    addSpinner() {
-        load.components(`${scope}/${scope}-spinner`);
+    async addSpinner() {
+        await import(`/app/src/components/${scope}/${scope}-spinner.js`);
         $$.append($.createElement(`${scope}-spinner`));
     }
 
-    generateBody() {
-        load.components(
-            `${scope}/${scope}-header`,
-            `${scope}/${scope}-footer`,
-        );
-
+    async generateBody() {
+        await import(`/app/src/components/${scope}/${scope}-header.js`);
+        await import(`/app/src/components/${scope}/${scope}-footer.js`);
+      
         $$.append($.createElement(`${scope}-header`));
         $$.append($.createElement(`main`));
         $$.append($.createElement(`${scope}-footer`));

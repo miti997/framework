@@ -1,4 +1,4 @@
-import RountingMiddleware from '/app/src/middleware/RoutingMIddleware.js';
+import RountingMiddleware from '/app/src/middleware/RoutingMiddleware.js';
 import '/app/config/routes.js';
 import '/app/core/ViewFactory.js';
 import '/app/src/components/Component.js'

@@ -22,9 +22,9 @@ export default class RoutingMiddleware {
     onClickEvent() {
         $.addEventListener('click', (e) => {
             let target = e.composedPath()[0];
-            if (target.tagName === 'A' && target.hasAttribute('data-link')) {
+            if (target.tagName === 'SPA-LINK') {
                 e.preventDefault();
-                this.uri = new URL(target.href).pathname;
+                this.uri = target.getAttribute('to');
                 this.goOverRoutes();
             }
         });
@@ -71,4 +71,4 @@ export default class RoutingMiddleware {
         this.ViewFactory.build(this.matchedView, this.params);
         if (pushState) history.pushState({}, null, this.uri);  
     }
-}
+};

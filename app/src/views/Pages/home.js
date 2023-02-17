@@ -1,5 +1,5 @@
-import View from "/app/src/views/View.js"
-import "/app/src/components/todo-item.js"
+import View from "/app/src/views/View.js";
+import "/app/src/components/todo-item.js";
 
 export default class PageHome extends View {
     content() {
@@ -10,7 +10,7 @@ export default class PageHome extends View {
         //         resolve("delayed function");
         //     }, 5000);
         // });        
-        return/*html*/`
+        return/*html*/`             
             <div>Hello world</div>
             <todo-item checked>
                 Todo 1
@@ -20,4 +20,4 @@ export default class PageHome extends View {
             <todo-item>Todo 3</todo-item>
         `
     }
-}
+};

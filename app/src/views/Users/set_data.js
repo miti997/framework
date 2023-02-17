@@ -1,4 +1,4 @@
-import View from "/app/src/views/View.js"
+import View from "/app/src/views/View.js";
 
 export default class UsersSetData extends View {
     content(userId, valueToChange) {
@@ -6,4 +6,4 @@ export default class UsersSetData extends View {
             <div> Hello users ${userId} data ${valueToChange}</div>
         `
     }
-}
+};

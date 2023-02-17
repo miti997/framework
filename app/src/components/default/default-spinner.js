@@ -1,4 +1,4 @@
-import Component from '/app/src/components/Component.js'
+import Component from '/app/src/components/Component.js';
 
 customElements.define('default-spinner', class LoadingSpinner extends Component {
     constructor() {
@@ -53,4 +53,4 @@ customElements.define('default-spinner', class LoadingSpinner extends Component 
             }
         `
     }
-})
+});

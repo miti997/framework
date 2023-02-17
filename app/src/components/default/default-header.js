@@ -1,5 +1,5 @@
-// let Component = await load.component();
-import Component from '/app/src/components/Component.js'
+import Component from '/app/src/components/Component.js';
+import '/app/src/components/spa-link.js';
 
 customElements.define('default-header', class DefaultHeader extends Component {
     constructor() {
@@ -9,16 +9,13 @@ customElements.define('default-header', class DefaultHeader extends Component {
     shadowContent() {
         return /*html*/`
             <ul>
-                <li><a href="/" data-link>Home</a></li>
-                <li><a href="/contact" data-link>Contact</a></li>
-                <li><a href="/users" data-link>Users</a></li>
-                <li><a href="/users/add" data-link>Add user</a></li>
-                <li><a href="/users/edit/2" data-link>Edit User 2</a></li>
-                <li><a href="/users/set_data/3/3" data-link>User set data</a></li>
+                <li><spa-link to="/">Home</spa-link></li>
+                <li><spa-link to="/contact">Contact</spa-link></li>
+                <li><spa-link to="/users">Users</spa-link></li>
+                <li><spa-link to="/users/add">Add user</spa-link></li>
+                <li><spa-link to="/users/edit/2">Edit User 2</spa-link></li>
+                <li><spa-link to="/users/set_data/3/3">User set data</spa-link></li>
             </ul>
         `;
     }
-
-    shadowStyle() {
-    }
-})
+});

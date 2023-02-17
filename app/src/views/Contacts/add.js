@@ -1,4 +1,4 @@
-import View from "/app/src/views/View.js"
+import View from "/app/src/views/View.js";
 
 export default class ContactAdd extends View {
     content() {
@@ -6,4 +6,4 @@ export default class ContactAdd extends View {
             <div> Hello contacts add</div>
         `
     }
-}
+};

@@ -1,4 +1,4 @@
-import View from "/app/src/views/View.js"
+import View from "/app/src/views/View.js";
 
 export default class UsersEdit extends View {
     content(id) {
@@ -6,4 +6,4 @@ export default class UsersEdit extends View {
             <div> Hello edit user ${id}</div>
         `
     }
-}
+};
